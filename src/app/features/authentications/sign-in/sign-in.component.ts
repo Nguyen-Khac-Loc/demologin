@@ -35,7 +35,9 @@ export class SignInComponent implements OnDestroy {
 					this.loading = false;
 					if (response.successed) {
 						this.message = response.message;
-						this.router.navigateByUrl('home/dashboard');
+						setTimeout(() => {
+							this.router.navigateByUrl('home/dashboard');
+						}, 2500);
 					} else {
 						this.message = response.message;
 					}
