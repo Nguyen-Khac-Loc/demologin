@@ -1,31 +1,56 @@
-<!-- <div class="flex justify-center items-center">
-	<form #form="ngForm" (ngSubmit)="onFormSubmitted()">
-		<div class="mb-3">
-			<label for="username">Username</label>
-			<input type="text" class=" bg-slate-200 ml-1" name="username" id="username" [(ngModel)]="model.username">
-		</div>
-		<div class="mb-3">
-			<label for="password">Password</label>
-			<input type="password" [(ngModel)]="model.password" name="username" class=" bg-slate-200 ml-2" id="password">
-		</div>
-		<div class="ml-[100px] rounded-lg bg-slate-400 w-[45px] h-max"><button type="submit">Login</button></div>
-	</form>
-</div> -->
 <div class="flex justify-center items-center h-[500px] bg-gray-100">
-	<form #form="ngForm" (ngSubmit)="onFormSubmitted()" class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+	<form
+		#form="ngForm"
+		(ngSubmit)="onFormSubmitted()"
+		class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm"
+	>
 		<div class="mb-4">
-			<label for="username" class="block text-gray-700 font-bold mb-2">Username</label>
-			<input type="text" id="username" name="username" [(ngModel)]="model.username"
-				class="w-full p-2 border border-gray-300 rounded-md bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<label for="username" class="block text-gray-700 font-bold mb-2"
+				>Username</label
+			>
+			<input
+				type="text"
+				id="username"
+				name="username"
+				[(ngModel)]="model.username"
+				class="w-full p-2 border border-gray-300 rounded-md bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
 		</div>
 		<div class="mb-6">
-			<label for="password" class="block text-gray-700 font-bold mb-2">Password</label>
-			<input type="password" id="password" name="password" [(ngModel)]="model.password"
-				class="w-full p-2 border border-gray-300 rounded-md bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+			<label for="password" class="block text-gray-700 font-bold mb-2"
+				>Password</label
+			>
+			<input
+				type="password"
+				id="password"
+				name="password"
+				[(ngModel)]="model.password"
+				class="w-full p-2 border border-gray-300 rounded-md bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			/>
 		</div>
-		<div class="flex justify-center">
-			<button type="submit"
-				class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">Login</button>
+		<div class="flex justify-center mb-4">
+			<button
+				type="submit"
+				[disabled]="loading"
+				class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center"
+			>
+				<span
+					*ngIf="loading"
+					class="spinner-border spinner-border-sm"
+				></span>
+				<span *ngIf="loading"></span>
+				<span *ngIf="!loading">Login</span>
+			</button>
+		</div>
+		<div *ngIf="message" class="text-red-500 text-center">
+			{{ message }}
+		</div>
+		<div
+			*ngIf="message"
+			class="text-green-500 text-center transition-opacity duration-3000"
+			[ngClass]="{ 'opacity-0': message }"
+		>
+			{{ message }}
 		</div>
 	</form>
 </div>

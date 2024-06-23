@@ -8,31 +8,41 @@ import { SignInResponse } from '../models/sign-in-response.model';
 @Component({
 	selector: 'app-sign-in',
 	templateUrl: './sign-in.component.html',
-	styleUrls: ['./sign-in.component.css']
+	styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnDestroy {
 	model: SignInRequest;
 	private signInSubscribtion?: Subscription;
-
-	constructor(private authenticationService: AuthenticationService, private router: Router) {
+	loading = false;
+	message: string | null = null;
+	constructor(
+		private authenticationService: AuthenticationService,
+		private router: Router
+	) {
 		this.model = {
 			username: '',
-			password: ''
+			password: '',
 		};
 	}
 
-
 	onFormSubmitted() {
-		this.signInSubscribtion = this.authenticationService.login(this.model)
+		this.loading = true;
+		this.message = null;
+		this.signInSubscribtion = this.authenticationService
+			.login(this.model)
 			.subscribe({
 				next: (response: SignInResponse) => {
+					this.loading = false;
 					if (response.successed) {
-						console.log(response);
+						this.message = response.message;
 						this.router.navigateByUrl('home/dashboard');
+					} else {
+						this.message = response.message;
 					}
-					else {
-						console.log(response);
-					}
+				},
+				error: (err) => {
+					this.loading = false;
+					this.message = 'An error occurred. Please try again.';
 				},
 			});
 	}
